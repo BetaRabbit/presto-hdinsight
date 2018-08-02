@@ -15,19 +15,21 @@ if [[ $nodes -lt 4 ]]; then
   exit 1
 fi 
 
-VERSION=0.174
+VERSION=0.206
 
 mkdir -p /var/lib/presto
+mkdir -p /var/lib/presto/data
+mkdir -p /var/lib/presto/etc
 chmod -R 777 /var/lib/presto/
 
 if [[ $(hostname -s) = hn0-* ]]; then 
   apt-get update
   which mvn &> /dev/null || apt-get -y -qq install maven
   cd /var/lib/presto
-  wget https://github.com/hdinsight/presto-hdinsight/archive/master.tar.gz -O presto-hdinsight.tar.gz
+  wget https://github.com/betarabbit/presto-hdinsight/archive/master.tar.gz -O presto-hdinsight.tar.gz
   tar xzf presto-hdinsight.tar.gz
   cd presto-hdinsight-master
-  wget https://prestohdi.blob.core.windows.net/build/presto-yarn-package.zip -P build/
+  wget https://casprestopoc.blob.core.windows.net/presto/presto-yarn-package.zip -P build/
   slider package --install --name presto1 --package build/presto-yarn-package.zip --replacepkg
   ./createconfigs.sh $VERSION "${1:-}"
   slider exists presto1 --live && slider stop presto1 --force
