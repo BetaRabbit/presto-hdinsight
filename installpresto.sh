@@ -49,8 +49,8 @@ if [[ $(hostname -s) = hn* ]]; then
     sleep 10
   done
 
-  if [[ $attempt -gt 60 ]]; then
-    echo "[Error] Presto failed to start in 10 mins after 60 attempts. Exiting."
+  if [[ $attempt -gt 20 ]]; then
+    echo "[Error] Presto failed to start in 10 mins after 20 attempts. Exiting."
     exit 1
   fi
 
